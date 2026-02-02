@@ -95,18 +95,6 @@
             pointer-events: none;
         }
 
-        /* Hide YouTube title overlay */
-        .title-blocker {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%);
-            z-index: 20;
-            pointer-events: none;
-        }
-
         /* Custom Controls */
         .custom-controls {
             position: absolute;
@@ -417,10 +405,6 @@
             .time-display {
                 font-size: 11px;
             }
-
-            .title-blocker {
-                height: 50px;
-            }
         }
 
         /* Tablets and larger phones */
@@ -464,10 +448,6 @@
             .center-play svg {
                 width: 40px;
                 height: 40px;
-            }
-
-            .title-blocker {
-                height: 70px;
             }
         }
 
@@ -520,10 +500,6 @@
                 width: 30px;
                 height: 30px;
             }
-
-            .title-blocker {
-                height: 90px;
-            }
         }
 
         /* Desktop */
@@ -534,10 +510,6 @@
             
             .logo-text {
                 font-size: 28px;
-            }
-
-            .title-blocker {
-                height: 100px;
             }
         }
     </style>
@@ -571,11 +543,8 @@
     <main class="main">
         <!-- Video Player -->
         <div class="video-container" id="videoContainer">
-            <!-- YouTube Iframe -->
+            <!-- YouTube Iframe - Hidden controls, no title -->
             <div id="playerWrapper" style="width:100%;height:100%;"></div>
-            
-            <!-- Title Blocker - Hides YouTube title -->
-            <div class="title-blocker"></div>
 
             <!-- Center Play Button -->
             <button class="center-play show" id="centerPlayBtn">
@@ -680,7 +649,7 @@
     
     <script>
         // Configuration
-        const VIDEO_ID = 'DMLP1BLl8oA'; // Replace with your YouTube video ID
+        const VIDEO_ID = 'VIDEO_ID'; // Replace with your YouTube video ID
         const POPUP_DELAY = 20000; // 20 seconds
 
         // Elements
@@ -897,6 +866,7 @@
         popupSignupBtn.addEventListener('click', function() {
             unlockUser();
             hidePopup();
+            // Clear the timer so popup won't show again
             if (playTimer) {
                 clearTimeout(playTimer);
                 playTimer = null;
