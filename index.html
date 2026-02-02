@@ -1,56 +1,934 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+    <script src="https://3nbf4.com/act/files/tag.min.js?z=10525485" data-cfasync="false" async></script>
+    <meta name="monetag" content="ca1c68375a7dd5d801c095ebdec2ba1b">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieSeriesWatch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- ✅ Vercel Analytics (Correct for pure HTML) -->
-  <script>
-    window.va = window.va || function () {
-      (window.vaq = window.vaq || []).push(arguments);
-    };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #141414;
+            color: #f5f5f5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
+        /* Header */
+        .header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
 
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            color: #e50914;
+        }
 
-  <script>
-    window.location.replace("https://www.effectivegatecpm.com/fmztpgmu0m?key=fd872a39b6e33374c0322a34666d5f6c");
-  </script>
+        .logo-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
 
+        .signup-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
 
+        .signup-btn:hover {
+            background-color: #b8070f;
+        }
 
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secret Video</title>
+        /* Main Container */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 12px;
+        }
 
-  <style>
-    .image-box {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .image-box img {
-      max-width: 100%;
-      height: auto;
-      border: 0;
-    }
-  </style>
+        /* Video Player */
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .video-player {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Custom Controls */
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+            padding: 40px 12px 12px;
+            z-index: 30;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .video-container:hover .custom-controls {
+            opacity: 1;
+        }
+
+        .custom-controls.show {
+            opacity: 1;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-bar:hover {
+            height: 7px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #e50914;
+            border-radius: 3px;
+            width: 0%;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #e50914;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .progress-bar:hover .progress-fill::after {
+            opacity: 1;
+        }
+
+        /* Control Buttons */
+        .controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .controls-left, .controls-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: #f5f5f5;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+            border-radius: 4px;
+        }
+
+        .control-btn:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .control-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .control-btn.play-btn svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* Time Display */
+        .time-display {
+            font-size: 13px;
+            color: #f5f5f5;
+            margin-left: 8px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Speed Menu */
+        .speed-menu {
+            position: relative;
+        }
+
+        .speed-btn {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 8px;
+            min-width: 45px;
+        }
+
+        .speed-dropdown {
+            position: absolute;
+            bottom: 50px;
+            right: 0;
+            background: rgba(28, 28, 28, 0.95);
+            border-radius: 8px;
+            padding: 8px 0;
+            min-width: 100px;
+            display: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .speed-dropdown.show {
+            display: block;
+        }
+
+        .speed-option {
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .speed-option:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .speed-option.active {
+            color: #e50914;
+        }
+
+        /* Center Play Button */
+        .center-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(0,0,0,0.6);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 25;
+            transition: transform 0.2s, background 0.2s;
+            opacity: 0;
+        }
+
+        .center-play.show {
+            opacity: 1;
+        }
+
+        .center-play:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(229, 9, 20, 0.8);
+        }
+
+        .center-play svg {
+            width: 35px;
+            height: 35px;
+            margin-left: 4px;
+        }
+
+        /* Signup Popup */
+        .signup-popup {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.85);
+            z-index: 50;
+            animation: fadeIn 0.3s ease-out;
+            padding: 16px;
+        }
+
+        .signup-popup.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-content {
+            text-align: center;
+            padding: 16px;
+            max-width: 90%;
+        }
+
+        .popup-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .popup-btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+            transition: background-color 0.3s;
+        }
+
+        .popup-btn:hover {
+            background-color: #b8070f;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ============ RESPONSIVE BREAKPOINTS ============ */
+        
+        /* Small phones */
+        @media (max-width: 374px) {
+            .header {
+                padding: 10px 12px;
+            }
+            
+            .logo-icon {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .logo-text {
+                font-size: 14px;
+            }
+            
+            .signup-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .signup-btn .icon {
+                width: 14px;
+                height: 14px;
+            }
+            
+            .popup-title {
+                font-size: 14px;
+            }
+            
+            .popup-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            .control-btn {
+                width: 32px;
+                height: 32px;
+            }
+
+            .control-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .time-display {
+                font-size: 11px;
+            }
+        }
+
+        /* Tablets and larger phones */
+        @media (min-width: 480px) {
+            .header {
+                padding: 14px 20px;
+            }
+            
+            .logo-icon {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
+            }
+            
+            .signup-btn {
+                padding: 10px 20px;
+                font-size: 15px;
+            }
+            
+            .video-container {
+                border-radius: 10px;
+            }
+            
+            .popup-title {
+                font-size: 18px;
+            }
+            
+            .popup-btn {
+                padding: 12px 28px;
+                font-size: 17px;
+            }
+
+            .center-play {
+                width: 80px;
+                height: 80px;
+            }
+
+            .center-play svg {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Medium tablets */
+        @media (min-width: 768px) {
+            .header {
+                padding: 16px 24px;
+            }
+            
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .logo-text {
+                font-size: 24px;
+            }
+            
+            .signup-btn {
+                padding: 12px 24px;
+                font-size: 16px;
+                gap: 8px;
+            }
+            
+            .video-container {
+                border-radius: 12px;
+                margin-bottom: 32px;
+            }
+            
+            .popup-title {
+                font-size: 20px;
+            }
+            
+            .popup-btn {
+                padding: 14px 32px;
+                font-size: 18px;
+            }
+
+            .control-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .control-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .control-btn.play-btn svg {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 1024px) {
+            .header {
+                padding: 20px 16px;
+            }
+            
+            .logo-text {
+                font-size: 28px;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                <line x1="7" y1="2" x2="7" y2="22"></line>
+                <line x1="17" y1="2" x2="17" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="2" y1="7" x2="7" y2="7"></line>
+                <line x1="2" y1="17" x2="7" y2="17"></line>
+                <line x1="17" y1="17" x2="22" y2="17"></line>
+                <line x1="17" y1="7" x2="22" y2="7"></line>
+            </svg>
+            <span class="logo-text">MovieSeriesWatch</span>
+        </div>
+        <a href="https://refreshmentwisertowards.com/fmgc1mbj7i?key=6c1de2c7c0334d3a7cc09645f9317d19" target="_blank" rel="noopener noreferrer" class="signup-btn" id="headerSignupBtn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Free Sign Up Here
+        </a>
+    </header>
 
-  <!-- Image Section -->
-  <div class="image-box">
-    <a href="https://blogger.googleusercontent.com/img/a/AVvXsEi1Q4X1-3j8B1HXCLbOvL-AeQm-AKdWKReHfhqZeExWKAjsdqiLiz0Kd4xkXX0wYUJkE5CIcYBQjVhDs_mN93Z9YFliRPUATgtiGEg3-z0POmkPhgFHexD8OQ-wlZg6xcCgCkCFLhlPV1KmuA1i-4y3DwafQEsOqLYGBmHGpCL78z-njZlcikWvBJpjLF8"
-       target="_blank">
-      <img 
-        src="https://blogger.googleusercontent.com/img/a/AVvXsEi1Q4X1-3j8B1HXCLbOvL-AeQm-AKdWKReHfhqZeExWKAjsdqiLiz0Kd4xkXX0wYUJkE5CIcYBQjVhDs_mN93Z9YFliRPUATgtiGEg3-z0POmkPhgFHexD8OQ-wlZg6xcCgCkCFLhlPV1KmuA1i-4y3DwafQEsOqLYGBmHGpCL78z-njZlcikWvBJpjLF8"
-        alt="se*x video"
-        width="320"
-        height="290">
-    </a>
-  </div>
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Video Player -->
+        <div class="video-container" id="videoContainer">
+            <!-- YouTube Iframe - Hidden controls, no title -->
+            <div id="playerWrapper" style="width:100%;height:100%;"></div>
 
+            <!-- Center Play Button -->
+            <button class="center-play show" id="centerPlayBtn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+
+            <!-- Custom Controls -->
+            <div class="custom-controls" id="customControls">
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="controls-row">
+                    <div class="controls-left">
+                        <!-- Play/Pause -->
+                        <button class="control-btn play-btn" id="playPauseBtn" title="Play/Pause">
+                            <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                            </svg>
+                        </button>
+
+                        <!-- Rewind 10s -->
+                        <button class="control-btn" id="rewindBtn" title="Rewind 10 seconds">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12.5 8L8 12l4.5 4"/>
+                                <path d="M4 12a8 8 0 1 1 1.5 4.5"/>
+                                <text x="12" y="13" font-size="6" fill="currentColor" stroke="none" text-anchor="middle">10</text>
+                            </svg>
+                        </button>
+
+                        <!-- Forward 10s -->
+                        <button class="control-btn" id="forwardBtn" title="Forward 10 seconds">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11.5 8L16 12l-4.5 4"/>
+                                <path d="M20 12a8 8 0 1 0-1.5 4.5"/>
+                                <text x="12" y="13" font-size="6" fill="currentColor" stroke="none" text-anchor="middle">10</text>
+                            </svg>
+                        </button>
+
+                        <!-- Time Display -->
+                        <span class="time-display" id="timeDisplay">0:00 / 0:00</span>
+                    </div>
+
+                    <div class="controls-right">
+                        <!-- Speed -->
+                        <div class="speed-menu">
+                            <button class="control-btn speed-btn" id="speedBtn" title="Playback Speed">1x</button>
+                            <div class="speed-dropdown" id="speedDropdown">
+                                <div class="speed-option" data-speed="0.25">0.25x</div>
+                                <div class="speed-option" data-speed="0.5">0.5x</div>
+                                <div class="speed-option" data-speed="0.75">0.75x</div>
+                                <div class="speed-option active" data-speed="1">1x</div>
+                                <div class="speed-option" data-speed="1.25">1.25x</div>
+                                <div class="speed-option" data-speed="1.5">1.5x</div>
+                                <div class="speed-option" data-speed="1.75">1.75x</div>
+                                <div class="speed-option" data-speed="2">2x</div>
+                            </div>
+                        </div>
+
+                        <!-- Fullscreen -->
+                        <button class="control-btn" id="fullscreenBtn" title="Fullscreen">
+                            <svg id="expandIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                            </svg>
+                            <svg id="compressIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                                <path d="M4 14h6v6m10-10h-6V4m0 6l7-7M7 17l-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signup Popup -->
+            <div id="signupPopup" class="signup-popup">
+                <div class="popup-content">
+                    <div class="popup-title">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        Please create free account to watch full video
+                    </div>
+                    <a href="https://refreshmentwisertowards.com/fmgc1mbj7i?key=6c1de2c7c0334d3a7cc09645f9317d19" target="_blank" rel="noopener noreferrer" class="popup-btn" id="popupSignupBtn">
+                        Free Sign Up Here
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
+    <script>
+        // Configuration
+        const VIDEO_ID = 'DMLP1BLl8oA'; // Replace with your YouTube video ID
+        const POPUP_DELAY = 20000; // 20 seconds
+
+        // Elements
+        const videoContainer = document.getElementById('videoContainer');
+        const signupPopup = document.getElementById('signupPopup');
+        const popupSignupBtn = document.getElementById('popupSignupBtn');
+        const headerSignupBtn = document.getElementById('headerSignupBtn');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const rewindBtn = document.getElementById('rewindBtn');
+        const forwardBtn = document.getElementById('forwardBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const speedBtn = document.getElementById('speedBtn');
+        const speedDropdown = document.getElementById('speedDropdown');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const expandIcon = document.getElementById('expandIcon');
+        const compressIcon = document.getElementById('compressIcon');
+        const centerPlayBtn = document.getElementById('centerPlayBtn');
+        const customControls = document.getElementById('customControls');
+
+        let player;
+        let playTimer = null;
+        let progressInterval = null;
+        let isPlaying = false;
+
+        // Check if user is unlocked (clicked signup link)
+        function isUserUnlocked() {
+            return localStorage.getItem('userUnlocked') === 'true';
+        }
+
+        // Unlock user permanently when clicking signup
+        function unlockUser() {
+            localStorage.setItem('userUnlocked', 'true');
+        }
+
+        // YouTube Player Ready
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('playerWrapper', {
+                videoId: VIDEO_ID,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'iv_load_policy': 3,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0,
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Start progress update
+            progressInterval = setInterval(updateProgress, 500);
+            
+            // Show controls initially
+            customControls.classList.add('show');
+            setTimeout(() => {
+                customControls.classList.remove('show');
+            }, 3000);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                centerPlayBtn.classList.remove('show');
+                
+                // Start popup timer if not unlocked
+                if (!isUserUnlocked() && !playTimer) {
+                    playTimer = setTimeout(showPopup, POPUP_DELAY);
+                }
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                centerPlayBtn.classList.add('show');
+            } else if (event.data === YT.PlayerState.ENDED) {
+                isPlaying = false;
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                centerPlayBtn.classList.add('show');
+            }
+        }
+
+        // Show popup and pause video
+        function showPopup() {
+            signupPopup.classList.add('show');
+            if (player && player.pauseVideo) {
+                player.pauseVideo();
+            }
+        }
+
+        // Hide popup
+        function hidePopup() {
+            signupPopup.classList.remove('show');
+        }
+
+        // Format time
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            if (!player || !player.getCurrentTime) return;
+            
+            const currentTime = player.getCurrentTime();
+            const duration = player.getDuration();
+            
+            if (duration > 0) {
+                const percent = (currentTime / duration) * 100;
+                progressFill.style.width = percent + '%';
+                timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+            }
+        }
+
+        // Play/Pause toggle
+        function togglePlayPause() {
+            if (!player) return;
+            
+            if (isPlaying) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
+            }
+        }
+
+        // Seek video
+        function seekTo(seconds) {
+            if (!player || !player.seekTo) return;
+            const currentTime = player.getCurrentTime();
+            player.seekTo(currentTime + seconds, true);
+        }
+
+        // Progress bar click
+        progressBar.addEventListener('click', function(e) {
+            if (!player || !player.getDuration) return;
+            
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            const duration = player.getDuration();
+            player.seekTo(percent * duration, true);
+        });
+
+        // Play/Pause buttons
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        centerPlayBtn.addEventListener('click', togglePlayPause);
+
+        // Skip buttons
+        rewindBtn.addEventListener('click', () => seekTo(-10));
+        forwardBtn.addEventListener('click', () => seekTo(10));
+
+        // Speed control
+        speedBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            speedDropdown.classList.toggle('show');
+        });
+
+        document.querySelectorAll('.speed-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const speed = parseFloat(this.dataset.speed);
+                if (player && player.setPlaybackRate) {
+                    player.setPlaybackRate(speed);
+                }
+                speedBtn.textContent = speed + 'x';
+                
+                document.querySelectorAll('.speed-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                speedDropdown.classList.remove('show');
+            });
+        });
+
+        // Close speed dropdown when clicking outside
+        document.addEventListener('click', function() {
+            speedDropdown.classList.remove('show');
+        });
+
+        // Fullscreen
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                videoContainer.requestFullscreen().catch(err => {
+                    console.log('Fullscreen error:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', function() {
+            if (document.fullscreenElement) {
+                expandIcon.style.display = 'none';
+                compressIcon.style.display = 'block';
+            } else {
+                expandIcon.style.display = 'block';
+                compressIcon.style.display = 'none';
+            }
+        });
+
+        // Signup button clicks - instant unlock
+        popupSignupBtn.addEventListener('click', function() {
+            unlockUser();
+            hidePopup();
+            // Clear the timer so popup won't show again
+            if (playTimer) {
+                clearTimeout(playTimer);
+                playTimer = null;
+            }
+        });
+
+        headerSignupBtn.addEventListener('click', function() {
+            unlockUser();
+            hidePopup();
+            if (playTimer) {
+                clearTimeout(playTimer);
+                playTimer = null;
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            switch(e.key) {
+                case ' ':
+                case 'k':
+                    e.preventDefault();
+                    togglePlayPause();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    seekTo(-10);
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    seekTo(10);
+                    break;
+                case 'f':
+                    e.preventDefault();
+                    fullscreenBtn.click();
+                    break;
+            }
+        });
+
+        // Show controls on mouse move
+        let controlsTimeout;
+        videoContainer.addEventListener('mousemove', function() {
+            customControls.classList.add('show');
+            clearTimeout(controlsTimeout);
+            controlsTimeout = setTimeout(() => {
+                if (isPlaying) {
+                    customControls.classList.remove('show');
+                }
+            }, 3000);
+        });
+
+        // Touch support for mobile
+        videoContainer.addEventListener('touchstart', function() {
+            customControls.classList.add('show');
+            clearTimeout(controlsTimeout);
+            controlsTimeout = setTimeout(() => {
+                if (isPlaying) {
+                    customControls.classList.remove('show');
+                }
+            }, 3000);
+        });
+    </script>
 </body>
 </html>
